@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap");
+
+:root {
+  --border-color: #2c7fbe;
+  --fill-color: #32bafa;
+  --base-bg-color: #3494e4;
+  --primary-text-color: #fff;
+  --cup-bg: #fff;
+}
+
+* {   
+  box-sizing: border-box;
+}
+
+.body {
+  width: auto; 
+  height: 100vh;
+  background-color: var(--base-bg-color);
+  color: var(--primary-text-color);
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* margin-bottom: 40px; */
+}
+
+.input1 {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  border: none;
+  border-radius: 20%;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 32px;
+}
+
+.goal-label {
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.cups-wrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.text {
+  text-align: center;
+  margin: 0 0 5px;
+}
+
+.btn {
+  margin-left: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  background-color: #fff;
+  color: #3494e4;
+  box-shadow: inset 0 0 0 0 #ffff;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in;
+}
+
+.btn:hover {
+  box-shadow: inset 100px 0 0 0 #3494e4;
+  color: var(--border-color);
+}
+
+
+@media only screen and (max-width: 600px) {
+  .title {
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .cups-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+  }
+}

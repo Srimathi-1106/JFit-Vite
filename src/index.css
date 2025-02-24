@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+html, body, #root {
+  background-color: white;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.icon-hover-gradient {
+  transition: all 0.3s ease-in-out;
+  fill: #9ca3af; /* Default gray color */
+}
+
+.group:hover .icon-hover-gradient {
+  fill: url(#icon-gradient);
+}
+
+
+
+body{
+  background-color: white;
+}
