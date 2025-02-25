@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import "../../css_files/message.css";
+import "../../css_files/Message.css";
 
 interface MessageProps {
   currentValue: number;
