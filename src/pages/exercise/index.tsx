@@ -1,150 +1,380 @@
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { Card, CardContent, CardMedia, Box, Button, Typography, Container, TextField } from "@mui/material";
 // import { AppLayout } from "@/components/layout/AppLayout";
-// import { Card } from "@/components/ui/card";
-// import { Dumbbell, Search, Youtube } from "lucide-react";
-// import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import App from "@/App";
+// // Type Definitions
+// interface Exercise {
+//   id: string;
+//   name: string;
+//   gifUrl: string;
+//   target: string;
+// }
+ 
+// const BASE_API_URL = "https://exercisedb.p.rapidapi.com";
+ 
+// const API_HEADERS = {
+//   "X-RapidAPI-Key": "2a2f8f587dmsh38516a70a23a50cp1d2eebjsnb4a41ab3c0e3", // Replace with your actual API key
+//   "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
+// };
+ 
+// // Diet recommendations for body parts
+// const dietRecommendations: { [key: string]: string } = {
+//   "back": "For a strong back, incorporate high-protein foods like lean meats, eggs, and fish. Include foods rich in vitamin C to help with recovery, such as citrus fruits and leafy greens.",
+//   "cardio": "For cardio workouts, a balanced diet with complex carbs (like whole grains) is important to fuel the body. Pair with lean protein (chicken, turkey) to support muscle recovery.",
+//   "chest": "For building chest muscles, focus on high-protein foods like chicken, fish, and nuts. Consider adding complex carbs like brown rice and oats for energy.",
+//   "lower arms": "For strengthening the lower arms, ensure you're consuming adequate protein for muscle repair, along with healthy fats from nuts, seeds, and olive oil.",
+//   "lower legs": "To build muscle in the lower legs, focus on a diet rich in lean proteins and complex carbs, like quinoa, sweet potatoes, and chicken breast.",
+//   "neck": "For neck exercises, consume foods rich in protein for muscle repair (like chicken and fish) and anti-inflammatory foods like turmeric and berries.",
+//   "shoulders": "Build shoulder strength with a diet including lean protein sources like fish and chicken, and add a lot of vegetables for nutrients.",
+//   "upper arms": "To target the upper arms, focus on protein-rich foods like turkey, tofu, and beans. Avoid sugary snacks and stick to healthy fats.",
+//   "upper legs": "For leg muscle development, focus on lean protein sources and carbs like brown rice, oats, and sweet potatoes to fuel your workout.",
+//   "waist": "For a slim waistline, focus on a balanced diet with high-fiber vegetables, lean proteins, and whole grains. Keep refined sugars and processed foods to a minimum."
+// };
+ 
+// const FitnessExercises = () => {
+//   const [exercises, setExercises] = useState<Exercise[]>([]);
+//   const [bodyParts, setBodyParts] = useState<string[]>([]);
+//   const [selectedBodyPart, setSelectedBodyPart] = useState("");
+//   const [reps, setReps] = useState<{ [key: string]: number }>({});
+//   const [caloriesBurned, setCaloriesBurned] = useState<{ [key: string]: number }>({});
+ 
+//   // Fetch available body parts on component mount
+//   useEffect(() => {
+//     const fetchBodyParts = async () => {
+//       try {
+//         const response = await axios.get<string[]>(`${BASE_API_URL}/exercises/bodyPartList`, { headers: API_HEADERS });
+//         setBodyParts(response.data);
+//       } catch (error) {
+//         console.error("Error fetching body parts:", error);
+//       }
+//     };
+ 
+//     fetchBodyParts();
+//   }, []);
+ 
+//   // Fetch exercises when a body part is selected
+//   useEffect(() => {
+//     if (selectedBodyPart) {
+//       fetchExercisesByBodyPart(selectedBodyPart);
+//     }
+//   }, [selectedBodyPart]);
+ 
+//   const fetchExercisesByBodyPart = async (bodyPart: string) => {
+//     try {
+//       const response = await axios.get<Exercise[]>(`${BASE_API_URL}/exercises/bodyPart/${encodeURIComponent(bodyPart)}`, { headers: API_HEADERS });
+//       setExercises(response.data);
+//     } catch (error) {
+//       console.error("Error fetching exercises:", error);
+//     }
+//   };
+ 
+//   // Function to calculate calories burned per exercise
+//   const calculateCalories = (exerciseId: string, numReps: number) => {
+//     // Example: Assuming 0.05 calories burned per rep (adjust this number based on actual data)
+//     const calories = numReps * 0.05;
+//     setCaloriesBurned((prev) => ({
+//       ...prev,
+//       [exerciseId]: calories
+//     }));
+//   };
+ 
+//   return (
+//    <>
+//    <AppLayout>
+//     <Container>
+//       <Typography variant="h4" fontWeight="bold" gutterBottom>
+//         Fitness Exercise Library
+//       </Typography>
+ 
+//       {/* Body Parts Section */}
+//       <Typography variant="h5" fontWeight="bold" marginTop={3}>
+//         Select Body Part
+//       </Typography>
+//       <Box
+//         sx={{
+//           display: "flex",
+//           overflowX: "auto",
+//           whiteSpace: "nowrap",
+//           padding: "10px 0",
+//           gap: "8px",
+//         }}
+//       >
+//         {bodyParts.map((bodyPart) => (
+//           <Button
+//             key={bodyPart}
+//             variant={selectedBodyPart === bodyPart ? "contained" : "outlined"}
+//             onClick={() => setSelectedBodyPart(bodyPart)}
+//             sx={{ minWidth: "70px", fontSize: "14px" }} // Reduced button size
+//           >
+//             {bodyPart.toUpperCase()}
+//           </Button>
+//         ))}
+//       </Box>
+ 
+//       {/* Diet Recommendations Section */}
+//       {selectedBodyPart && (
+//         <>
+//           <Typography variant="h6" fontWeight="bold" marginTop={3}>
+//             Diet Recommendations for {selectedBodyPart.toUpperCase()}:
+//           </Typography>
+//           <Typography variant="body1" marginTop={1}>
+//             {dietRecommendations[selectedBodyPart.toLowerCase()] || "No specific diet available."}
+//           </Typography>
+//         </>
+//       )}
+ 
+//       {/* Exercises Section */}
+//       <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={3} marginTop={3}>
+//         {exercises.length === 0 ? (
+//           <Typography variant="body1" color="textSecondary" textAlign="center">
+//             {selectedBodyPart ? "No exercises found for this body part." : "Select a body part to see exercises."}
+//           </Typography>
+//         ) : (
+//           exercises.map((exercise) => (
+//             <Card key={exercise.id} sx={{ minHeight: "480px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+//               <CardMedia component="img" height="400" image={exercise.gifUrl} alt={exercise.name} />
+ 
+//               {/* Card Content */}
+//               <CardContent sx={{ padding: "1px", textAlign: "center" }}>
+//                 <Typography variant="subtitle1" fontWeight="bold">
+//                   {exercise.name}
+//                 </Typography>
+//                 <Typography variant="caption" color="textSecondary">
+//                   Target: {exercise.target}
+//                 </Typography>
+ 
+//                 {/* Reps Input */}
+//                 <TextField
+//                   label="Reps"
+//                   type="number"
+//                   value={reps[exercise.id] || ""}
+//                   onChange={(e) => setReps((prev) => ({ ...prev, [exercise.id]: Math.max(0, Number(e.target.value)) }))} // Prevent negative reps
+//                   fullWidth
+//                   margin="normal"
+//                 />
+ 
+//                 {/* Do Exercise Button */}
+//                 <Button
+//                   variant="contained"
+//                   onClick={() => calculateCalories(exercise.id, reps[exercise.id] || 0)}
+//                   sx={{ marginTop: "8px" }}
+//                 >
+//                   Do Exercise
+//                 </Button>
+ 
+//                 {/* Display Calories Burned */}
+//                 {caloriesBurned[exercise.id] !== undefined && (
+//                   <Typography variant="body2" color="textSecondary" marginTop={2}>
+//                     Calories burned: {caloriesBurned[exercise.id].toFixed(2)} kcal
+//                   </Typography>
+//                 )}
+//               </CardContent>
+//             </Card>
+//           ))
+//         )}
+//       </Box>
+//     </Container>
+//     </AppLayout>
+//     </>
+//   );
+// };
+ 
+// export default FitnessExercises;
+ 
+ 
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import { Card, CardContent, CardMedia, Grid, Box, Button, Typography, Container, TextField } from "@mui/material";
+// import { AppLayout } from "@/components/layout/AppLayout";
 
-// const exercises = [
-//   {
-//     name: "Push-ups",
-//     category: "Strength",
-//     muscle: "Chest",
-//     difficulty: "Beginner",
-//     equipment: "None",
-//     youtubeUrl: "https://www.youtube.com/watch?v=IODxDxX7oi4",
-//   },
-//   {
-//     name: "Pull-ups",
-//     category: "Strength",
-//     muscle: "Back",
-//     difficulty: "Intermediate",
-//     equipment: "Pull-up Bar",
-//     youtubeUrl: "https://www.youtube.com/watch?v=eGo4IYlbE5g",
-//   },
-//   {
-//     name: "Squats",
-//     category: "Strength",
-//     muscle: "Legs",
-//     difficulty: "Beginner",
-//     equipment: "None",
-//     youtubeUrl: "https://www.youtube.com/watch?v=YaXPRqUwItQ",
-//   },
-//   {
-//     name: "Running",
-//     category: "Cardio",
-//     muscle: "Full Body",
-//     difficulty: "Beginner",
-//     equipment: "None",
-//     youtubeUrl: "https://www.youtube.com/watch?v=_kGESn8ArrU",
-//   },
-//   {
-//     name: "Bicycle Crunches",
-//     category: "Core",
-//     muscle: "Abs",
-//     difficulty: "Beginner",
-//     equipment: "None",
-//     youtubeUrl: "https://www.youtube.com/watch?v=1we3bh9uhqY",
-//   },
-//   {
-//     name: "Plank",
-//     category: "Core",
-//     muscle: "Core",
-//     difficulty: "Beginner",
-//     equipment: "None",
-//     youtubeUrl: "https://www.youtube.com/watch?v=ASdvN_XEl_c",
-//   },
-// ];
+// // Type Definitions
+// interface Exercise {
+//   id: string;
+//   name: string;
+//   gifUrl: string;
+//   target: string;
+// }
 
-// const ExercisePage = () => {
+// const BASE_API_URL = "https://exercisedb.p.rapidapi.com";
+
+ 
+// const API_HEADERS = {
+//   "X-RapidAPI-Key": "2a2f8f587dmsh38516a70a23a50cp1d2eebjsnb4a41ab3c0e3", // Replace with your actual API key
+//   "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
+// };
+// // const API_HEADERS = {
+// //   "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY", // Replace with your actual API key
+// //   "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
+// // };
+
+// // Diet recommendations
+// const dietRecommendations: { [key: string]: string } = {
+//   "back": "For a strong back, incorporate high-protein foods like lean meats, eggs, and fish.",
+//   "cardio": "For cardio workouts, eat complex carbs (whole grains) and lean proteins (chicken, turkey).",
+//   "chest": "For chest muscles, focus on high-protein foods like chicken, fish, and nuts.",
+//   "lower arms": "For lower arms, consume adequate protein with healthy fats from nuts and seeds.",
+//   "lower legs": "To build lower legs, focus on lean proteins and complex carbs like quinoa and sweet potatoes.",
+//   "neck": "For neck exercises, consume anti-inflammatory foods like turmeric and berries.",
+//   "shoulders": "Build shoulder strength with lean proteins and plenty of vegetables.",
+//   "upper arms": "Target upper arms with protein-rich foods like turkey, tofu, and beans.",
+//   "upper legs": "For leg muscles, eat lean proteins and energy-rich carbs like brown rice and oats.",
+//   "waist": "For a slim waistline, focus on high-fiber vegetables, lean proteins, and whole grains."
+// };
+
+// const FitnessExercises = () => {
+//   const [exercises, setExercises] = useState<Exercise[]>([]);
+//   const [bodyParts, setBodyParts] = useState<string[]>([]);
+//   const [selectedBodyPart, setSelectedBodyPart] = useState("");
+//   const [reps, setReps] = useState<{ [key: string]: number }>({});
+//   const [caloriesBurned, setCaloriesBurned] = useState<{ [key: string]: number }>({});
+
+//   useEffect(() => {
+//     const fetchBodyParts = async () => {
+//       try {
+//         const response = await axios.get<string[]>(`${BASE_API_URL}/exercises/bodyPartList`, { headers: API_HEADERS });
+//         setBodyParts(response.data);
+//       } catch (error) {
+//         console.error("Error fetching body parts:", error);
+//       }
+//     };
+//     fetchBodyParts();
+//   }, []);
+
+//   useEffect(() => {
+//     if (selectedBodyPart) {
+//       fetchExercisesByBodyPart(selectedBodyPart);
+//     }
+//   }, [selectedBodyPart]);
+
+//   const fetchExercisesByBodyPart = async (bodyPart: string) => {
+//     try {
+//       const response = await axios.get<Exercise[]>(`${BASE_API_URL}/exercises/bodyPart/${encodeURIComponent(bodyPart)}`, { headers: API_HEADERS });
+//       setExercises(response.data);
+//     } catch (error) {
+//       console.error("Error fetching exercises:", error);
+//     }
+//   };
+
+//   const calculateCalories = (exerciseId: string, numReps: number) => {
+//     const calories = numReps * 0.05; // Example: 0.05 calories burned per rep
+//     setCaloriesBurned((prev) => ({
+//       ...prev,
+//       [exerciseId]: calories
+//     }));
+//   };
+
 //   return (
 //     <AppLayout>
-//       <div className="flex flex-col gap-8 animate-fade-in">
-//         <div>
-//           <h2 className="text-base font-semibold leading-7 text-primary">
-//             Exercise Library
-//           </h2>
-//           <p className="mt-1 text-3xl font-bold tracking-tight">
-//             Find Your Workout
-//           </p>
-//         </div>
+//       <Container maxWidth="lg">
+//         <Typography variant="h4" fontWeight="bold" textAlign="center" marginTop={3} gutterBottom>
+//           Fitness Exercise Library
+//         </Typography>
 
-//         <Tabs defaultValue="library" className="w-full">
-//           <TabsList className="grid w-full max-w-[400px] grid-cols-2">
-//             <TabsTrigger value="library">Exercise Library</TabsTrigger>
-//             <TabsTrigger value="workouts">My Workouts</TabsTrigger>
-//           </TabsList>
+//         {/* Body Parts Selection */}
+//         <Typography variant="h5" fontWeight="bold" marginTop={3} textAlign="center">
+//           Select Body Part
+//         </Typography>
+//         <Box
+//           sx={{
+//             display: "flex",
+//             flexWrap: "wrap",
+//             justifyContent: "center",
+//             gap: "10px",
+//             marginTop: "15px"
+//           }}
+//         >
+//           {bodyParts.map((bodyPart) => (
+//             <Button
+//               key={bodyPart}
+//               variant={selectedBodyPart === bodyPart ? "contained" : "outlined"}
+//               onClick={() => setSelectedBodyPart(bodyPart)}
+//               sx={{ fontSize: "14px", padding: "8px 12px" }}
+//             >
+//               {bodyPart.toUpperCase()}
+//             </Button>
+//           ))}
+//         </Box>
 
-//           <TabsContent value="library" className="space-y-6 mt-6">
-//             <div className="flex flex-col sm:flex-row gap-4">
-//               <div className="relative flex-1">
-//                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-//                 <Input placeholder="Search exercises..." className="pl-10" />
-//               </div>
-//               <Button>
-//                 <Dumbbell className="mr-2 h-4 w-4" />
-//                 Add Custom Exercise
-//               </Button>
-//             </div>
+//         {/* Diet Recommendations */}
+//         {selectedBodyPart && (
+//           <Box marginTop={4} textAlign="center">
+//             <Typography variant="h6" fontWeight="bold">
+//               Diet Recommendations for {selectedBodyPart.toUpperCase()}:
+//             </Typography>
+//             <Typography variant="body1" marginTop={1}>
+//               {dietRecommendations[selectedBodyPart.toLowerCase()] || "No specific diet available."}
+//             </Typography>
+//           </Box>
+//         )}
 
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-//               {exercises.map((exercise) => (
-//                 <Card
-//                   key={exercise.name}
-//                   className="p-4 hover:shadow-lg transition-shadow"
-//                 >
-//                   <h3 className="font-semibold text-lg mb-2">
-//                     {exercise.name}
-//                   </h3>
-//                   <div className="space-y-2 text-sm text-gray-500">
-//                     <p>Category: {exercise.category}</p>
-//                     <p>Target Muscle: {exercise.muscle}</p>
-//                     <p>Difficulty: {exercise.difficulty}</p>
-//                     <p>Equipment: {exercise.equipment}</p>
-//                   </div>
-//                   <a
-//                     href={exercise.youtubeUrl}
-//                     target="_blank"
-//                     rel="noopener noreferrer"
-//                     className="block w-full mt-4"
-//                   >
-//                     <Button variant="outline" className="w-full">
-//                       <Youtube className="mr-2 h-4 w-4 text-red-600" />
-//                       Watch Tutorial
+//         {/* Exercises Section */}
+//         <Grid container spacing={3} marginTop={4} justifyContent="center">
+//           {exercises.length === 0 ? (
+//             <Typography variant="body1" color="textSecondary" textAlign="center" width="100%">
+//               {selectedBodyPart ? "No exercises found for this body part." : "Select a body part to see exercises."}
+//             </Typography>
+//           ) : (
+//             exercises.map((exercise) => (
+//               <Grid item xs={12} sm={6} md={4} lg={3} key={exercise.id}>
+//                 <Card sx={{ minHeight: "480px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+//                   <CardMedia component="img" height="400" image={exercise.gifUrl} alt={exercise.name} />
+//                   <CardContent sx={{ textAlign: "center" }}>
+//                     <Typography variant="subtitle1" fontWeight="bold">
+//                       {exercise.name}
+//                     </Typography>
+//                     <Typography variant="caption" color="textSecondary">
+//                       Target: {exercise.target}
+//                     </Typography>
+
+//                     {/* Reps Input */}
+//                     <TextField
+//                       label="Reps"
+//                       type="number"
+//                       value={reps[exercise.id] || ""}
+//                       onChange={(e) =>
+//                         setReps((prev) => ({ ...prev, [exercise.id]: Math.max(0, Number(e.target.value)) }))
+//                       }
+//                       fullWidth
+//                       margin="normal"
+//                     />
+
+//                     {/* Do Exercise Button */}
+//                     <Button
+//                       variant="contained"
+//                       onClick={() => calculateCalories(exercise.id, reps[exercise.id] || 0)}
+//                       sx={{ marginTop: "8px", width: "100%" }}
+//                     >
+//                       Do Exercise
 //                     </Button>
-//                   </a>
-//                 </Card>
-//               ))}
-//             </div>
-//           </TabsContent>
 
-//           <TabsContent value="workouts" className="mt-6">
-//             <Card className="p-6">
-//               <div className="text-center space-y-4">
-//                 <Dumbbell className="h-12 w-12 mx-auto text-gray-400" />
-//                 <h3 className="text-lg font-semibold">No Workouts Yet</h3>
-//                 <p className="text-gray-500">
-//                   Create your first workout routine by selecting exercises from
-//                   the library.
-//                 </p>
-//                 <Button>Create Workout</Button>
-//               </div>
-//             </Card>
-//           </TabsContent>
-//         </Tabs>
-//       </div>
+//                     {/* Display Calories Burned */}
+//                     {caloriesBurned[exercise.id] !== undefined && (
+//                       <Typography variant="body2" color="textSecondary" marginTop={2}>
+//                         Calories burned: {caloriesBurned[exercise.id].toFixed(2)} kcal
+//                       </Typography>
+//                     )}
+//                   </CardContent>
+//                 </Card>
+//               </Grid>
+//             ))
+//           )}
+//         </Grid>
+//       </Container>
 //     </AppLayout>
 //   );
 // };
 
-// export default ExercisePage;
+// export default FitnessExercises;
 
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, CardContent, CardMedia, Box, Button, Typography, Container, Stack } from "@mui/material";
-// import { Sidebar } from "@/components/layout/Sidebar";
+import { Card, CardContent, CardMedia, Grid, Box, Button, Typography, Container, TextField } from "@mui/material";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { supabase } from "../../config/supabaseClient"; // Ensure you have the correct Supabase client import
+import { useNavigate } from "react-router-dom";
+
 // Type Definitions
 interface Exercise {
   id: string;
@@ -154,18 +384,23 @@ interface Exercise {
 }
 
 const BASE_API_URL = "https://exercisedb.p.rapidapi.com";
-
 const API_HEADERS = {
-  "X-RapidAPI-Key": "2a2f8f587dmsh38516a70a23a50cp1d2eebjsnb4a41ab3c0e3", // Replace with your actual API key
+ "X-RapidAPI-Key": "2a2f8f587dmsh38516a70a23a50cp1d2eebjsnb4a41ab3c0e3", // Replace with your actual API key
   "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
 };
+// const API_HEADERS = {
+//   "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY", // Replace with your actual API key
+//   "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
+// };
 
 const FitnessExercises = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [bodyParts, setBodyParts] = useState<string[]>([]);
   const [selectedBodyPart, setSelectedBodyPart] = useState("");
+  const [reps, setReps] = useState<{ [key: string]: number }>({});
+  const [caloriesBurned, setCaloriesBurned] = useState<{ [key: string]: number }>({});
+  const navigate = useNavigate();
 
-  // Fetch available body parts on component mount
   useEffect(() => {
     const fetchBodyParts = async () => {
       try {
@@ -175,11 +410,9 @@ const FitnessExercises = () => {
         console.error("Error fetching body parts:", error);
       }
     };
-
     fetchBodyParts();
   }, []);
 
-  // Fetch exercises when a body part is selected
   useEffect(() => {
     if (selectedBodyPart) {
       fetchExercisesByBodyPart(selectedBodyPart);
@@ -195,66 +428,118 @@ const FitnessExercises = () => {
     }
   };
 
+  const calculateCalories = async (exercise: Exercise, numReps: number) => {
+    const calories = numReps * 0.05; // Example: 0.05 calories burned per rep
+    setCaloriesBurned((prev) => ({ ...prev, [exercise.id]: calories }));
+
+    // Save to Supabase
+    await saveExerciseToDB(exercise, numReps, calories);
+  };
+
+  const saveExerciseToDB = async (exercise: Exercise, numReps: number, calories: number) => {
+    const { data: user, error } = await supabase.auth.getUser();
+
+    if (error || !user?.user) {
+      console.error("User not authenticated");
+      navigate("/login");
+      return;
+    }
+
+    const { error: insertError } = await supabase.from("exercises").insert([
+      {
+        user_id: user.user.id,
+        exercise_name: exercise.name,
+        body_part: exercise.target,
+        reps: numReps,
+        calories_burned: calories
+      }
+    ]);
+
+    if (insertError) {
+      console.error("Error saving exercise:", insertError);
+    } else {
+      console.log("Exercise saved successfully");
+    }
+  };
+
   return (
-    <>
     <AppLayout>
-    <Container>
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
-        Fitness Exercise Library
-      </Typography>
+      <Container maxWidth="lg">
+        <Typography variant="h4" fontWeight="bold" textAlign="center" marginTop={3} gutterBottom>
+          Fitness Exercise Library
+        </Typography>
 
-      {/* Body Parts Section - Now in one line with horizontal scroll */}
-      <Typography variant="h5" fontWeight="bold" marginTop={3}>
-        Select Body Part
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          overflowX: "auto",
-          whiteSpace: "nowrap",
-          padding: "10px 0",
-          gap: "8px",
-        }}
-      >
-        {bodyParts.map((bodyPart) => (
-          <Button
-            key={bodyPart}
-            variant={selectedBodyPart === bodyPart ? "contained" : "outlined"}
-            onClick={() => setSelectedBodyPart(bodyPart)}
-            sx={{ minWidth: "100px", fontSize: "14px" }} // Reduced button size
-          >
-            {bodyPart.toUpperCase()}
-          </Button>
-        ))}
-      </Box>
+        {/* Body Parts Selection */}
+        <Typography variant="h5" fontWeight="bold" marginTop={3} textAlign="center">
+          Select Body Part
+        </Typography>
+        <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", marginTop: "15px" }}>
+          {bodyParts.map((bodyPart) => (
+            <Button
+              key={bodyPart}
+              variant={selectedBodyPart === bodyPart ? "contained" : "outlined"}
+              onClick={() => setSelectedBodyPart(bodyPart)}
+              sx={{ fontSize: "14px", padding: "8px 12px" }}
+            >
+              {bodyPart.toUpperCase()}
+            </Button>
+          ))}
+        </Box>
 
-      {/* Exercises Section */}
-      <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(300px, 1fr))" gap={3} marginTop={3}>
-        {exercises.length === 0 ? (
-          <Typography variant="body1" color="textSecondary" textAlign="center">
-            {selectedBodyPart ? "No exercises found for this body part." : "Select a body part to see exercises."}
-          </Typography>
-        ) : (
-          exercises.map((exercise) => (
-            <Card key={exercise.id} sx={{ minHeight: "480px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-              <CardMedia component="img" height="250" image={exercise.gifUrl} alt={exercise.name} />
+        {/* Exercises Section */}
+        <Grid container spacing={3} marginTop={4} justifyContent="center">
+          {exercises.length === 0 ? (
+            <Typography variant="body1" color="textSecondary" textAlign="center" width="100%">
+              {selectedBodyPart ? "No exercises found for this body part." : "Select a body part to see exercises."}
+            </Typography>
+          ) : (
+            exercises.map((exercise) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={exercise.id}>
+                <Card sx={{ minHeight: "480px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                  <CardMedia component="img" height="400" image={exercise.gifUrl} alt={exercise.name} />
+                  <CardContent sx={{ textAlign: "center" }}>
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      {exercise.name}
+                    </Typography>
+                    <Typography variant="caption" color="textSecondary">
+                      Target: {exercise.target}
+                    </Typography>
 
-              {/* Reduced CardContent size */}
-              <CardContent sx={{ padding: "8px", textAlign: "center" }}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {exercise.name}
-                </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Target: {exercise.target}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </Box>
-    </Container>
+                    {/* Reps Input */}
+                    <TextField
+                      label="Reps"
+                      type="number"
+                      value={reps[exercise.id] || ""}
+                      onChange={(e) =>
+                        setReps((prev) => ({ ...prev, [exercise.id]: Math.max(0, Number(e.target.value)) }))
+                      }
+                      fullWidth
+                      margin="normal"
+                    />
+
+                    {/* Do Exercise Button */}
+                    <Button
+                      variant="contained"
+                      onClick={() => calculateCalories(exercise, reps[exercise.id] || 0)}
+                      sx={{ marginTop: "8px", width: "100%" }}
+                    >
+                      Do Exercise
+                    </Button>
+
+                    {/* Display Calories Burned */}
+                    {caloriesBurned[exercise.id] !== undefined && (
+                      <Typography variant="body2" color="textSecondary" marginTop={2}>
+                        Calories burned: {caloriesBurned[exercise.id].toFixed(2)} kcal
+                      </Typography>
+                    )}
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))
+          )}
+        </Grid>
+      </Container>
     </AppLayout>
-    </>
   );
 };
 

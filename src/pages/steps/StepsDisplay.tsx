@@ -472,13 +472,13 @@ const StepsCounter = () => {
 
   return (
    <AppLayout>
-    <div className="flex flex-col items-center justify-center h-screen w-screen bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white p-4">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white p-4 ">
       <div className="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg p-6 text-center">
-        <h1 className="text-3xl font-bold mb-4">Step Counter</h1>
+        <h1 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">Step Counter</h1>
 
         {/* Step Goal Input */}
         <div className="mb-6">
-          <label className="block text-lg font-semibold mb-2">Set Your Goal</label>
+          <label className="block text-lg font-semibold mb-2 text-black">Set Your Goal</label>
           <input
             type="number"
             className="w-full p-2 border-none rounded-lg text-black bg-gray-100 focus:outline-none"
@@ -495,7 +495,7 @@ const StepsCounter = () => {
         </div>
 
         {/* Timer & Status */}
-        <div className="mb-4 text-lg font-semibold">
+        <div className="mb-4 text-lg font-semibold text-black">
           ⏱️ Time: {Math.floor(elapsedTime / 60)}:{elapsedTime % 60 < 10 ? `0${elapsedTime % 60}` : elapsedTime % 60}
         </div>
         <div className={`mb-4 text-lg font-bold ${isCounting ? "text-green-400" : "text-red-400"}`}>
@@ -512,11 +512,11 @@ const StepsCounter = () => {
         {/* Circular Progress Bar */}
         <div className="relative w-40 h-40 mx-auto mb-6">
           <svg className="absolute top-0 left-0 w-full h-full">
-            <circle cx="50%" cy="50%" r="45" stroke="#ddd" strokeWidth="10" fill="none" />
+            <circle cx="50%" cy="50%" r="70" stroke="#ddd" strokeWidth="10" fill="none" />
             <motion.circle
               cx="50%"
               cy="50%"
-              r="45"
+              r="70"
               stroke="#4CAF50"
               strokeWidth="10"
               fill="none"
@@ -527,7 +527,7 @@ const StepsCounter = () => {
               transition={{ duration: 0.5, ease: "easeInOut" }}
             />
           </svg>
-          <div className="absolute inset-0 flex items-center justify-center text-lg font-bold">
+          <div className="absolute inset-0 flex items-center justify-center text-lg font-bold text-black">
             {stepCount} / {goal} Steps
           </div>
         </div>
