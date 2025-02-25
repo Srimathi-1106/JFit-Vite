@@ -393,7 +393,7 @@ const API_HEADERS = {
 //   "X-RapidAPI-Host": "exercisedb.p.rapidapi.com"
 // };
 
-const FitnessExercises = () => {
+const Exercise = () => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [bodyParts, setBodyParts] = useState<string[]>([]);
   const [selectedBodyPart, setSelectedBodyPart] = useState("");
@@ -508,14 +508,14 @@ const FitnessExercises = () => {
         </Box>
 
         {/* Exercises Section */}
-        <Grid container spacing={3} marginTop={4} justifyContent="center">
+        <Grid container spacing={3} marginTop={4} justifyContent="center" className="bg-gradient-to-r from-[#200f7b] to-[#961aae] p-6">
           {exercises.length === 0 ? (
-            <Typography variant="body1" color="textSecondary" textAlign="center" width="100%">
+            <Typography variant="body1" color="white" textAlign="center" width="100%">
               {selectedBodyPart ? "No exercises found for this body part." : "Select a body part to see exercises."}
             </Typography>
           ) : (
             exercises.map((exercise) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={exercise.id}>
+              <Grid item xs={12} sm={6} md={4} lg={3} key={exercise.id} >
                 <Card sx={{ minHeight: "480px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <CardMedia component="img" height="400" image={exercise.gifUrl} alt={exercise.name} />
                   <CardContent sx={{ textAlign: "center" }}>
@@ -564,4 +564,4 @@ const FitnessExercises = () => {
   );
 };
 
-export default FitnessExercises;
+export default Exercise;
