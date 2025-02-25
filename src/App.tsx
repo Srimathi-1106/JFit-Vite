@@ -10,7 +10,7 @@ import { Sidebar } from "./components/layout/Sidebar";
 
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
-import WaterPage from "./pages/water";
+// import WaterPage from "./pages/water";
 import ExercisePage from "./pages/exercise";
 import FoodSearch from "./pages/food_calorie/FoodSearch";
 import Dashboard from "./pages/dashboard/Dashboard";
@@ -44,14 +44,14 @@ const App = () => (
       {/* <Sidebar/> */}
         <Routes>
           <Route path="/" element={<Auth />} />
-          <Route
+          {/* <Route
             path="/water"
             element={
               <ProtectedRoute>
                 <WaterPage />
               </ProtectedRoute>
             }
-          />
+          /> */}
           <Route
             path="/exercise"
             element={
