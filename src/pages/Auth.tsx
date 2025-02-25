@@ -59,10 +59,12 @@ const Auth = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-white text-black relative overflow-hidden " style={{width:"100vw", height:"100vh"}}>
-      {/* Floating Animated Dumbbells */}
+    // <div className="h-screen flex flex-col items-center justify-center bg-gray-900 text-white relative overflow-hidden " style={{width:"100vw", height:"100vh"}}>
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white relative overflow-hidden " style={{width:"100vw", height:"100vh"}}>
+
+    {/* Floating Animated Dumbbells */}
       <motion.div
-        className="absolute top-10 left-10 bg-black"
+        className="absolute top-10 left-10 text-green-400 text-6xl opacity-20"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -70,7 +72,7 @@ const Auth = () => {
       </motion.div>
 
       <motion.div
-        className="absolute bottom-10 right-10 bg-black"
+        className="absolute bottom-10 right-10 text-green-400 text-6xl opacity-20"
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       >
@@ -79,17 +81,17 @@ const Auth = () => {
 
       {/* StayFit Branding */}
       <motion.h1
-        className="text-5xl font-bold bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text"
+        className="text-5xl font-bold text-white mb-2"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        JFit 🏋️‍♂️
+        JFit
       </motion.h1>
 
       {/* Motivational Subtitle */}
       <motion.p
-        className="text-lg text-gray-800 mb-6"
+        className="text-lg text-gray-300 mb-6"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}

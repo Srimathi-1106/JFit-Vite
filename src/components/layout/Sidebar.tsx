@@ -91,7 +91,7 @@ export const Sidebar = () => {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-[240px] sm:w-[300px] p-0">
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
+          <div className="flex h-full grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
               <h1 className="text-2xl font-bold bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
                 JFit

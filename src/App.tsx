@@ -3,9 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 // import { Toaster } from "@/components/ui/toaster";
 // import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { supabase } from "./config/supabaseClient";
 import Register from "./pages/Register";
+import { Sidebar } from "./components/layout/Sidebar";
 
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -18,7 +19,7 @@ import Bmi from "./pages/bmi/Bmi";
 
 const queryClient = new QueryClient();
 
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -40,6 +41,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <BrowserRouter>
+      {/* <Sidebar/> */}
         <Routes>
           <Route path="/" element={<Auth />} />
           <Route
