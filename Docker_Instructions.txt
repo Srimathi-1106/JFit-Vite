@@ -1,0 +1,3 @@
+To Build: docker build -t jfit .
+To run: 
+docker run -d -p 5173:5173 --name jfit-container jfit
