@@ -7,6 +7,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { supabase } from "./config/supabaseClient";
 import Register from "./pages/Register";
 import { Sidebar } from "./components/layout/Sidebar";
+import BreathingExercise from "./pages/BreathingExercise/BreathingExercise";
 
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -75,6 +76,15 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Dashboard/>
+              </ProtectedRoute>
+            }
+          />
+
+<Route
+            path="/breathing_exercise"
+            element={
+              <ProtectedRoute>
+                <BreathingExercise/>
               </ProtectedRoute>
             }
           />

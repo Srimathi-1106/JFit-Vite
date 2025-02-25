@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../../config/supabaseClient";
-import { Activity, Home, Dumbbell, Heart, Droplets, Menu, Footprints, Calculator, LogOut } from "lucide-react";
+import { Activity, Home, Dumbbell, Heart, Droplets, Menu, Footprints, Calculator, LogOut,Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "Exercise", href: "/exercise", icon: Dumbbell },
+  { name: "Breathing Exercise", href: "/breathing_exercise", icon: Stethoscope },
   { name: "Steps", href: "/steps", icon: Footprints },
   { name: "Food Calories", href: "/food_calorie", icon: Heart },
-  { name: "BMI", href: "/bmi", icon: Calculator }
+  { name: "BMI", href: "/bmi", icon: Calculator },
+  
 ];
 
 const NavigationContent = ({ handleLogout }) => (

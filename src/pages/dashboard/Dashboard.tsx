@@ -207,7 +207,7 @@ export default function Dashboard() {
         .single();  // Assumes each user has one BMI record
 
       if (error) {
-        setBmi("couldn't fetch");
+        setBmi("No Data Found");
         console.error('Error fetching BMI:', error.message);
       } else {
         setBmi(data?.bmi);
