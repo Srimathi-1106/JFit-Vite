@@ -465,7 +465,7 @@ const FitnessExercises = () => {
   return (
     <AppLayout>
       <Container maxWidth="lg">
-        <Typography variant="h4" fontWeight="bold" textAlign="center" marginTop={3} gutterBottom>
+        <Typography variant="h4" className="bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text" fontWeight="bold" textAlign="center" marginTop={3} gutterBottom>
           Fitness Exercise Library
         </Typography>
 
@@ -476,13 +476,34 @@ const FitnessExercises = () => {
         <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px", marginTop: "15px" }}>
           {bodyParts.map((bodyPart) => (
             <Button
-              key={bodyPart}
-              variant={selectedBodyPart === bodyPart ? "contained" : "outlined"}
-              onClick={() => setSelectedBodyPart(bodyPart)}
-              sx={{ fontSize: "14px", padding: "8px 12px" }}
-            >
-              {bodyPart.toUpperCase()}
-            </Button>
+            key={bodyPart}
+            variant="outlined"
+            onClick={() => setSelectedBodyPart(bodyPart)}
+            sx={{
+              fontSize: "14px",
+              padding: "8px 12px",
+              borderWidth: "2px",
+              borderStyle: "solid",
+              borderColor: "transparent",
+              background: "linear-gradient(to right, #200f7b, #961aae)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              position: "relative",
+              "&:before": {
+                content: '""',
+                position: "absolute",
+                inset: 0,
+                borderRadius: "inherit",
+                padding: "2px",
+                background: "linear-gradient(to right, #200f7b, #961aae)",
+                WebkitMask: "linear-gradient(white, white) content-box, linear-gradient(white, white)",
+                WebkitMaskComposite: "destination-out",
+                maskComposite: "exclude",
+              },
+            }}
+          >
+            {bodyPart.toUpperCase()}
+          </Button>
           ))}
         </Box>
 

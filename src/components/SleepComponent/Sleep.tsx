@@ -274,8 +274,8 @@ const Sleep = () => {
     const percentage = (sleepHours / goal) * 100;
 
     return (
-        <div className="flex flex-col p-10 justify-between items-center bg-white rounded-lg shadow-md w-full h-full">
-            <h2 className="text-xl font-semibold text-gray-800">Sleep Tracker</h2>
+        <div className="flex flex-col justify-between items-center bg-white rounded-lg w-full h-full">
+            {/* <h2 className="text-xl  text-gray-800 font-bold bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">Sleep Tracker</h2> */}
 
             {/* Date Picker */}
             <input
