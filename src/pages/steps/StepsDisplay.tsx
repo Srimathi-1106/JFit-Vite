@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../config/supabaseClient";
-import { motion } from "framer-motion";
 import { AppLayout } from "@/components/layout/AppLayout";
-// import MeditationComponent from "@/components/Meditation/MeditationComponent";
  
 const StepsDisplay = () => {
   const [stepCount, setStepCount] = useState(0);
@@ -11,10 +9,7 @@ const StepsDisplay = () => {
   const [isCounting, setIsCounting] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [deltaValues, setDeltaValues] = useState({ x: 0, y: 0, z: 0 });
- 
- 
- 
+
   const [calories, setCalories] = useState<number>(
     parseFloat((stepCount * 0.04).toFixed(2))
   );
@@ -36,13 +31,8 @@ const StepsDisplay = () => {
   }, []);
  
   const circumference = 2 * Math.PI * radius;
-  const progressOffset = circumference - (stepCount / goal) * circumference;
- 
-  // Motion Detection Variables
-  const threshold: number = 4;
-  let lastX: number = 0,
-    lastY: number = 0,
-    lastZ: number = 0;
+  const progressOffset = circumference - Math.min((stepCount / goal), 1) * circumference;
+
  
   useEffect(() => {
     getUserId();
@@ -50,24 +40,27 @@ const StepsDisplay = () => {
  
   useEffect(() => {
     let timer: NodeJS.Timeout;
- 
     if (isCounting) {
-      window.addEventListener("devicemotion", detectMotion);
       timer = setInterval(() => {
         setElapsedTime((prev) => prev + 1);
       }, 1000);
     } else {
-      window.removeEventListener("devicemotion", detectMotion);
       clearInterval(timer);
     }
- 
     return () => {
-      window.removeEventListener("devicemotion", detectMotion);
       clearInterval(timer);
     };
   }, [isCounting]);
  
-  // 🔹 Fetch User ID from Supabase
+  useEffect(() => {
+    if (stepCount > 0) {
+      updateStepCount(stepCount);
+    }
+    setCalories(parseFloat((stepCount * 0.04).toFixed(2)));
+    setDistance(parseFloat((stepCount * 0.0008).toFixed(2)));
+  }, [stepCount]);
+  
+  // Fetch User ID from Supabase
   const getUserId = async () => {
     const { data, error } = await supabase.auth.getUser();
     if (error) {
@@ -81,7 +74,7 @@ const StepsDisplay = () => {
     }
   };
  
-  // 🔹 Fetch goal from Supabase
+  // Fetch goal from Supabase
   const fetchGoal = async (uid: string) => {
     try {
       const { data, error } = await supabase
@@ -100,7 +93,7 @@ const StepsDisplay = () => {
     }
   };
  
-  // 🔹 Fetch step count from Supabase
+  // Fetch step count from Supabase
   const fetchStepCount = async (uid: string) => {
     try {
       const { data, error } = await supabase
@@ -118,12 +111,7 @@ const StepsDisplay = () => {
     }
   };
  
-  useEffect(() => {
-    setCalories(parseFloat((stepCount * 0.04).toFixed(2)));
-    setDistance(parseFloat((stepCount * 0.0008).toFixed(2)));
-  }, [stepCount]);
- 
-  // 🔹 Update step count in Supabase
+  // Update step count in Supabase
   const updateStepCount = async (steps: number) => {
     if (!userId) return;
  
@@ -140,7 +128,7 @@ const StepsDisplay = () => {
     }
   };
  
-  // 🔹 Update goal in Supabase
+  // Update goal in Supabase
   const updateGoal = async () => {
     if (!userId) return;
  
@@ -157,48 +145,42 @@ const StepsDisplay = () => {
       console.error("Error updating goal:", error);
     }
   };
- 
-  // 🔹 Detect Motion and Count Steps
-  const detectMotion = (event: DeviceMotionEvent) => {
-    if (!isCounting) return;
- 
-    let { x = 0, y = 0, z = 0 } = event.acceleration ?? {};
- 
-    let deltaX = Math.abs(x - lastX);
-    let deltaY = Math.abs(y - lastY);
-    let deltaZ = Math.abs(z - lastZ);
- 
-    setDeltaValues({ x: deltaX, y: deltaY, z: deltaZ });
- 
-    if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
-      setStepCount((prev) => {
-        const newStepCount = prev + 1;
-        updateStepCount(newStepCount);
-        return newStepCount;
-      });
-    }
- 
-    lastX = x;
-    lastY = y;
-    lastZ = z;
-  };
- 
-  // 🔹 Start Counting (Fix: Keeps saved step count)
+  
+  const stepInterval = useRef<NodeJS.Timeout | null>(null);
+
   const startCounting = () => {
-    setElapsedTime(0);
+    alert("Starting the step counter...");
     setIsCounting(true);
+
+    if (!stepInterval.current) {
+      stepInterval.current = setInterval(() => {
+        setStepCount((prevCount) => prevCount + 1);
+      }, 800); // Increments steps every second
+    }
   };
- 
-  // 🔹 Stop Counting
+
   const stopCounting = () => {
+    alert("Stopping the step counter...");
     setIsCounting(false);
+
+    if (stepInterval.current) {
+      clearInterval(stepInterval.current);
+      stepInterval.current = null;
+    }
+    updateStepCount(stepCount)
+    alert(`Step counting stopped. Final count: ${stepCount}`);
   };
- 
-  const progress = Math.min((stepCount / goal) * 100, 100);
+
+  useEffect(() => {
+    return () => {
+      if (stepInterval.current) {
+        clearInterval(stepInterval.current);
+      }
+    };
+  }, []);
  
   return (
     <AppLayout>
-      {/* <MeditationComponent/> */}
       <div className="text-center mb-6">
           <h2 className="text-lg sm:text-xl font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
             Steps Tracker
@@ -209,11 +191,6 @@ const StepsDisplay = () => {
         </div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white p-4 ">
         <div className="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg p-6 text-center">
-          {/* <h1 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
-            Step Counter
-          </h1> */}
- 
-          {/* Step Goal Input */}
           <div className="mb-6">
             <label className="block text-lg font-semibold mb-2 text-black">
               Set Your Goal
@@ -221,7 +198,7 @@ const StepsDisplay = () => {
             <input
               type="number"
               className="w-full p-2 border-none rounded-lg text-black bg-gray-100 focus:outline-none"
-              value={newGoal}
+              value={newGoal === 0 ? "" : newGoal} 
               onChange={(e) => setNewGoal(Number(e.target.value))}
               placeholder="Enter step goal"
             />
@@ -239,23 +216,21 @@ const StepsDisplay = () => {
             {elapsedTime % 60 < 10 ? `0${elapsedTime % 60}` : elapsedTime % 60}
           </div>
           <div
-            className={`mb-4 text-lg font-bold ${
+            className={`mb-2 text-lg font-semibold ${
               isCounting ? "text-green-400" : "text-red-400"
             }`}
           >
             {isCounting ? "Recording..." : "Not Recording"}
           </div>
- 
-          {/*Delta Values */}
-          <div className="mb-4 bg-gray-800 p-4 rounded-lg">
-            <p>ΔX: {deltaValues.x.toFixed(2)}</p>
-            <p>ΔY: {deltaValues.y.toFixed(2)}</p>
-            <p>ΔZ: {deltaValues.z.toFixed(2)}</p>
+
+          <div className="bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text text-xl sm:text-2xl font-bold leading-7 ">
+            {stepCount>goal?"Goal Achieved!":"Keep Walking to achieve the Goal!"}
           </div>
+ 
  
           <div className="flex flex-col gap-6 items-center justify-start w-full p-6 sm:p-8">
             {/* Steps Tracker Section*/}
-            <div className="flex flex-col sm:flex-row items-center justify-center w-full max-w-4xl bg-white p-6 sm:p-8 rounded-2xl shadow-xl">
+            <div className="flex flex-col sm:flex-row items-center justify-center w-full max-w-4xl bg-white p-2 rounded-2xl shadow-xl">
               {/* Circular Step Counter */}
               <div className="relative w-40 h-40 sm:w-64 sm:h-64 flex items-center justify-center">
                 <svg className="w-full h-full" viewBox="0 0 200 200">
@@ -305,15 +280,15 @@ const StepsDisplay = () => {
               </div>
  
               {/* Calories and Distance Info */}
-              <div className="mt-4 sm:mt-0 sm:ml-10 flex flex-col items-center sm:items-start text-gray-800">
-                <p className="text-lg sm:text-xl font-semibold">
+              <div className="mt-4 sm:mt-0 sm:ml-5 flex flex-col items-center justify-center text-gray-800">
+                <p className="text-md sm:text-lg font-semibold">
                   {calories} kcal
                 </p>
-                <p className="text-sm sm:text-md">Calories Burned</p>
-                <p className="mt-4 text-lg sm:text-xl font-semibold">
+                <p className="text-sm sm:text-md text-center">Calories Burned</p>
+                <p className="mt-4 text-md sm:text-lg font-semibold">
                   {distance} km
                 </p>
-                <p className="text-sm sm:text-md">Distance Walked</p>
+                <p className="text-sm sm:text-md text-center">Distance Walked</p>
               </div>
             </div>
           </div>
