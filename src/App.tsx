@@ -11,7 +11,7 @@ import { Sidebar } from "./components/layout/Sidebar";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 // import WaterPage from "./pages/water";
-import ExercisePage from "./pages/exercise";
+import Exercise from "./pages/exercise/Exercise";
 import FoodSearch from "./pages/food_calorie/FoodSearch";
 import Dashboard from "./pages/dashboard/Dashboard";
 import StepsDisplay from "./pages/steps/StepsDisplay";
@@ -56,7 +56,7 @@ const App = () => (
             path="/exercise"
             element={
               <ProtectedRoute>
-                <ExercisePage />
+                <Exercise />
               </ProtectedRoute>
             }
           />
