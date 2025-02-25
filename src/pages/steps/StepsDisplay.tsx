@@ -199,11 +199,19 @@ const StepsDisplay = () => {
   return (
     <AppLayout>
       {/* <MeditationComponent/> */}
+      <div className="text-center mb-6">
+          <h2 className="text-lg sm:text-xl font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
+            Steps Tracker
+          </h2>
+          <p className="mt-1 text-xl sm:text-3xl text-black font-bold tracking-tight">
+            Track your steps and burn your calories!
+          </p>
+        </div>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white p-4 ">
         <div className="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-md rounded-lg shadow-lg p-6 text-center">
-          <h1 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
+          {/* <h1 className="text-3xl font-bold mb-4 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
             Step Counter
-          </h1>
+          </h1> */}
  
           {/* Step Goal Input */}
           <div className="mb-6">

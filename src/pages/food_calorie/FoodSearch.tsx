@@ -185,13 +185,13 @@ const FoodSearch: React.FC = () => {
   return (
     <>
       <AppLayout>
-        <div className="flex flex-col gap-8 items-center justify-start animate-fade-in w-full p-8">
-          <div className="text-center">
-            <h2 className="font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
-              Food Nutrition Search
+        <div className="flex flex-col items-center justify-start animate-fade-in w-full px-4">
+          <div className="text-center mb-6">
+            <h2 className="text-lg sm:text-xl font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
+              Food Calorie Tracker
             </h2>
-            <p className="mt-1 text-3xl font-bold tracking-tight">
-              Track your Food Calories!
+            <p className="mt-1 text-xl sm:text-3xl text-black font-bold tracking-tight">
+              Track your food calories at ease!
             </p>
           </div>
           <div className="flex flex-col items-center p-6 w-full bg-gradient-to-r from-[#2A1184] to-[#7417A2] min-h-screen">

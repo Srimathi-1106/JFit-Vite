@@ -89,6 +89,7 @@ const Bmi: React.FC = () => {
         </div>
 
         {/* Form Wrapper */}
+        <div className="flex flex-col items-center justify-center min-w-full min-h-screen bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white p-4 ">
         <div className="wrapper flex flex-col gap-4 w-full max-w-md bg-white shadow-lg rounded-lg p-6 sm:p-8">
           {/* Height Input */}
           <div className="flex flex-col">
@@ -97,7 +98,7 @@ const Bmi: React.FC = () => {
               type="number"
               placeholder="Enter height"
               onChange={(e) => setHeight(Number(e.target.value))}
-              className="input w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400"
+              className="input w-full p-2 border text-black border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400"
             />
           </div>
 
@@ -108,7 +109,7 @@ const Bmi: React.FC = () => {
               type="number"
               placeholder="Enter weight"
               onChange={(e) => setWeight(Number(e.target.value))}
-              className="input w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400"
+              className="input text-black w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400"
             />
           </div>
 
@@ -137,6 +138,8 @@ const Bmi: React.FC = () => {
           )}
         </div>
       </div>
+      </div>
+
     </AppLayout>
   );
 };
