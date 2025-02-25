@@ -55,7 +55,6 @@ const NavigationContent = ({ handleLogout }) => (
               onClick={handleLogout}
               className="group w-full flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold hover:bg-gray-50 transition-all duration-200 ease-in-out"
             >
-              
               <LogOut className="h-6 w-6 shrink-0 group-hover:text-red-600" aria-hidden="true" />
               <span className="group-hover:text-transparent group-hover:bg-red-600 group-hover:bg-clip-text">Logout</span>
             </button>
@@ -95,6 +94,7 @@ export const Sidebar = () => {
         <SheetContent side="left" className="w-[240px] sm:w-[300px] p-0">
           <div className="flex h-full grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
             <div className="flex h-16 shrink-0 items-center">
+            <img src='/fit.png' alt='logo'/>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
                 JFit
               </h1>
@@ -106,8 +106,9 @@ export const Sidebar = () => {
 
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col">
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
-          <div className="flex h-16 shrink-0 items-center">
+        <div className="flex grow flex-col gap-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+          <div className="flex gap-2 h-16 shrink-0 items-center">
+          <img src='/fit.png' alt='logo' />
             <h1 className="text-2xl font-bold bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
               JFit
             </h1>
