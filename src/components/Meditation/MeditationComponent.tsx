@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { AppLayout } from '../layout/AppLayout';
 
 interface MeditationProps {
   defaultDuration?: number; // in minutes
@@ -89,6 +90,7 @@ const MeditationComponent: React.FC<MeditationProps> = ({
   };
 
   return (
+    <AppLayout>
     <div className="flex flex-col items-center p-6 bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-indigo-700">Meditation Timer</h2>
       {showEyesClosedAlert && (
@@ -154,6 +156,7 @@ const MeditationComponent: React.FC<MeditationProps> = ({
         <p>Current session: {duration} minutes</p>
       </div>
     </div>
+    </AppLayout>
   );
 };
 

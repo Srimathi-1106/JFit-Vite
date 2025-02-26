@@ -17,6 +17,7 @@ import FoodSearch from "./pages/food_calorie/FoodSearch";
 import Dashboard from "./pages/dashboard/Dashboard";
 import StepsDisplay from "./pages/steps/StepsDisplay";
 import Bmi from "./pages/bmi/Bmi";
+import MeditationComponent from "./components/Meditation/MeditationComponent";
 
 const queryClient = new QueryClient();
 
@@ -80,11 +81,20 @@ const App = () => (
             }
           />
 
-<Route
+          <Route
             path="/breathing_exercise"
             element={
               <ProtectedRoute>
                 <BreathingExercise/>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/meditation"
+            element={
+              <ProtectedRoute>
+                <MeditationComponent/>
               </ProtectedRoute>
             }
           />

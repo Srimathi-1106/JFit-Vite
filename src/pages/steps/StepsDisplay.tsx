@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../config/supabaseClient";
 import { AppLayout } from "@/components/layout/AppLayout";
-
+import WaterTracker from "@/components/WaterTrackerComponent/WaterTracker";
 const StepsDisplay = () => {
   const [stepCount, setStepCount] = useState(0);
   const [goal, setGoal] = useState(10000);
@@ -181,6 +181,7 @@ const StepsDisplay = () => {
 
   return (
     <AppLayout>
+      <WaterTracker />
       <div className="text-center mb-6">
         <h2 className="text-lg sm:text-xl font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
           Steps Tracker

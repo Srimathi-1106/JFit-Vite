@@ -768,181 +768,262 @@
  
 // export default WaterTracker;
 
-import React, { useState, useEffect } from "react";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import {supabase} from '../../config/supabaseClient'; // Import your Supabase client
+// import React, { useState, useEffect } from "react";
+// import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+// import "react-circular-progressbar/dist/styles.css";
+// import {supabase} from '../../config/supabaseClient'; // Import your Supabase client
 
+// const WaterTracker = () => {
+//   const [goal, setGoal] = useState(2000); // Default goal
+//   const [intake, setIntake] = useState(0); // Default intake
+//   const [amount, setAmount] = useState(250); // Default drink amount
+//   const [userData, setUserData] = useState(null); // Store the user's data
+
+//   // Fetch user data when component loads
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const user = supabase.auth.user(); // Get the current logged-in user
+//       if (user) {
+//         // Fetch data from Supabase for the authenticated user
+//         const { data, error } = await supabase
+//           .from('water_tracker')
+//           .select('*')
+//           .eq('user_id', user.id)
+//           .single(); // Get a single record for the user
+
+//         if (data) {
+//           setGoal(data.goal); // Set goal from fetched data
+//           setIntake(data.intake); // Set intake from fetched data
+//           setAmount(data.amount); // Set amount from fetched data
+//         } else {
+//           console.error('Error fetching user data:', error);
+//         }
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   const percentage = Math.min((intake / goal) * 100, 100);
+
+//   // Handle adding water (update intake in Supabase)
+//   const handleAddWater = async () => {
+//     const newIntake = Math.min(intake + amount, goal);
+//     setIntake(newIntake);
+
+//     const user = supabase.auth.user();
+//     if (user) {
+//       const { data, error } = await supabase
+//         .from('water_tracker')
+//         .upsert({ user_id: user.id, intake: newIntake, goal, amount }, { onConflict: ['user_id'] });
+
+//       if (error) {
+//         console.error('Error updating intake:', error);
+//       }
+//     }
+//   };
+
+//   // Handle resetting intake
+//   const handleReset = async () => {
+//     setIntake(0);
+
+//     const user = supabase.auth.user();
+//     if (user) {
+//       const { data, error } = await supabase
+//         .from('water_tracker')
+//         .upsert({ user_id: user.id, intake: 0, goal, amount }, { onConflict: ['user_id'] });
+
+//       if (error) {
+//         console.error('Error resetting intake:', error);
+//       }
+//     }
+//   };
+
+//   return (
+//     <div style={styles.container}>
+//       <h2>🚰 Water Tracker</h2>
+
+//       <div>
+//         <label>Set Goal (ml): </label>
+//         <input
+//           type="number"
+//           value={goal}
+//           onChange={(e) => setGoal(Number(e.target.value))}
+//           style={styles.input}
+//         />
+//       </div>
+
+//       {/* Water Glass Animation */}
+//       <div style={styles.glassContainer}>
+//         <div style={{ ...styles.water, height: `${percentage}%` }} />
+//       </div>
+
+//       {/* Circular Progress Bar */}
+//       <div style={{ width: "150px", margin: "20px auto" }}>
+//         <CircularProgressbar
+//           value={percentage}
+//           text={`${Math.round(percentage)}%`}
+//           styles={buildStyles({
+//             textSize: "16px",
+//             pathColor: "#00A6FF",
+//             textColor: "#333",
+//             trailColor: "#ddd",
+//           })}
+//         />
+//       </div>
+
+//       <p>
+//         <strong>{intake} ml</strong> / {goal} ml
+//       </p>
+
+//       {/* Buttons */}
+//       <button style={styles.button} onClick={handleAddWater}>
+//         💧 Drink {amount}ml
+//       </button>
+//       <button style={styles.resetButton} onClick={handleReset}>
+//         🔄 Reset
+//       </button>
+//     </div>
+//   );
+// };
+
+// const styles = {
+//   container: {
+//     width: "300px",
+//     margin: "auto",
+//     padding: "20px",
+//     textAlign: "center",
+//     border: "2px solid #00A6FF",
+//     borderRadius: "15px",
+//     backgroundColor: "#f0f9ff",
+//     boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
+//   },
+//   input: {
+//     padding: "5px",
+//     fontSize: "16px",
+//     width: "80px",
+//     textAlign: "center",
+//     marginLeft: "10px",
+//   },
+//   glassContainer: {
+//     width: "100px",
+//     height: "150px",
+//     borderRadius: "10px",
+//     backgroundColor: "#ddd",
+//     position: "relative",
+//     overflow: "hidden",
+//     margin: "20px auto",
+//     border: "2px solid #777",
+//   },
+//   water: {
+//     position: "absolute",
+//     bottom: "0",
+//     width: "100%",
+//     backgroundColor: "#00A6FF",
+//     transition: "height 0.5s ease-in-out",
+//   },
+//   button: {
+//     backgroundColor: "#00A6FF",
+//     color: "#fff",
+//     padding: "10px 20px",
+//     border: "none",
+//     borderRadius: "5px",
+//     fontSize: "16px",
+//     cursor: "pointer",
+//     marginTop: "10px",
+//   },
+//   resetButton: {
+//     backgroundColor: "#FF4D4D",
+//     color: "#fff",
+//     padding: "10px 20px",
+//     border: "none",
+//     borderRadius: "5px",
+//     fontSize: "16px",
+//     cursor: "pointer",
+//     marginTop: "10px",
+//     marginLeft: "10px",
+//   },
+// };
+
+// export default WaterTracker;
+import React, { useEffect, useState } from 'react';
+import BigCup from './BigCup';
+import SmallCups from './SmallCups';
+import Message from './Message';
+import '../../css_files/WaterTracker.css';
+ 
 const WaterTracker = () => {
-  const [goal, setGoal] = useState(2000); // Default goal
-  const [intake, setIntake] = useState(0); // Default intake
-  const [amount, setAmount] = useState(250); // Default drink amount
-  const [userData, setUserData] = useState(null); // Store the user's data
-
-  // Fetch user data when component loads
+  const [userGoal, setUserGoal] = useState(8);
+  const [defaultGoal, setDefaultGoal] = useState(8);
+  const [currentValue, setCurrentValue] = useState(0);
+  const [usage, setUsage] = useState(0);
+  const [goal, setGoal] = useState(0);
+ 
   useEffect(() => {
-    const fetchData = async () => {
-      const user = supabase.auth.user(); // Get the current logged-in user
-      if (user) {
-        // Fetch data from Supabase for the authenticated user
-        const { data, error } = await supabase
-          .from('water_tracker')
-          .select('*')
-          .eq('user_id', user.id)
-          .single(); // Get a single record for the user
-
-        if (data) {
-          setGoal(data.goal); // Set goal from fetched data
-          setIntake(data.intake); // Set intake from fetched data
-          setAmount(data.amount); // Set amount from fetched data
-        } else {
-          console.error('Error fetching user data:', error);
-        }
-      }
-    };
-
-    fetchData();
+    const savedGoal = localStorage.getItem('userGoal');
+    const savedProgress = localStorage.getItem('currentValue');
+    if (savedGoal) {
+      setDefaultGoal(parseInt(savedGoal));
+      setUserGoal(parseInt(savedGoal));
+    }
+    if (savedProgress) {
+      setCurrentValue(parseInt(savedProgress));
+    }
+ 
+    // Load saved cup states
+    const savedCups = localStorage.getItem('selectedCups');
+    if (savedCups) {
+      const cups = JSON.parse(savedCups);
+      const selectedCount = cups.reduce((total, count) => total + count, 0);
+      setCurrentValue(selectedCount);
+    }
   }, []);
-
-  const percentage = Math.min((intake / goal) * 100, 100);
-
-  // Handle adding water (update intake in Supabase)
-  const handleAddWater = async () => {
-    const newIntake = Math.min(intake + amount, goal);
-    setIntake(newIntake);
-
-    const user = supabase.auth.user();
-    if (user) {
-      const { data, error } = await supabase
-        .from('water_tracker')
-        .upsert({ user_id: user.id, intake: newIntake, goal, amount }, { onConflict: ['user_id'] });
-
-      if (error) {
-        console.error('Error updating intake:', error);
-      }
-    }
+ 
+  useEffect(() => {
+    localStorage.setItem('userGoal', defaultGoal);
+    localStorage.setItem('currentValue', currentValue);
+  }, [defaultGoal, currentValue]);
+ 
+  const onSubmitUserGoal = (e) => {
+    e.preventDefault();
+    setDefaultGoal(userGoal);
   };
-
-  // Handle resetting intake
-  const handleReset = async () => {
-    setIntake(0);
-
-    const user = supabase.auth.user();
-    if (user) {
-      const { data, error } = await supabase
-        .from('water_tracker')
-        .upsert({ user_id: user.id, intake: 0, goal, amount }, { onConflict: ['user_id'] });
-
-      if (error) {
-        console.error('Error resetting intake:', error);
-      }
-    }
+ 
+  const onChangeUserGoal = (event) => {
+    setGoal(parseInt(event.target.value) || 0);
+    setUserGoal(parseInt(event.target.value) || 0);
   };
-
+ 
+  const handleChange = (value) => {
+    setCurrentValue(parseInt(currentValue + value) || 0);
+  };
+ 
   return (
-    <div style={styles.container}>
-      <h2>🚰 Water Tracker</h2>
-
-      <div>
-        <label>Set Goal (ml): </label>
-        <input
-          type="number"
-          value={goal}
-          onChange={(e) => setGoal(Number(e.target.value))}
-          style={styles.input}
-        />
+    <div className='body'>
+      <div className='main-wrapper body'>
+        <h3 className='title'>How many cups do you want to drink?</h3>
+        <form className='form' onSubmit={onSubmitUserGoal}>
+          <label className='goal-label'>
+            Your goal:
+            <input
+              type="number"
+              min="1"
+              max="15"
+              value={userGoal}
+              onChange={onChangeUserGoal}
+              className='input1 text-black w-[40px]'
+            />
+          </label>
+          <button className="btn" type="submit">Submit</button>
+        </form>
+        <Message goal={defaultGoal} currentValue={currentValue} />
+        <div className='cups-wrapper'>
+          <BigCup goal={defaultGoal} currentValue={currentValue} />
+          <SmallCups goal={defaultGoal} handleChange={handleChange} />
+        </div>
       </div>
-
-      {/* Water Glass Animation */}
-      <div style={styles.glassContainer}>
-        <div style={{ ...styles.water, height: `${percentage}%` }} />
-      </div>
-
-      {/* Circular Progress Bar */}
-      <div style={{ width: "150px", margin: "20px auto" }}>
-        <CircularProgressbar
-          value={percentage}
-          text={`${Math.round(percentage)}%`}
-          styles={buildStyles({
-            textSize: "16px",
-            pathColor: "#00A6FF",
-            textColor: "#333",
-            trailColor: "#ddd",
-          })}
-        />
-      </div>
-
-      <p>
-        <strong>{intake} ml</strong> / {goal} ml
-      </p>
-
-      {/* Buttons */}
-      <button style={styles.button} onClick={handleAddWater}>
-        💧 Drink {amount}ml
-      </button>
-      <button style={styles.resetButton} onClick={handleReset}>
-        🔄 Reset
-      </button>
     </div>
   );
 };
-
-const styles = {
-  container: {
-    width: "300px",
-    margin: "auto",
-    padding: "20px",
-    textAlign: "center",
-    border: "2px solid #00A6FF",
-    borderRadius: "15px",
-    backgroundColor: "#f0f9ff",
-    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)",
-  },
-  input: {
-    padding: "5px",
-    fontSize: "16px",
-    width: "80px",
-    textAlign: "center",
-    marginLeft: "10px",
-  },
-  glassContainer: {
-    width: "100px",
-    height: "150px",
-    borderRadius: "10px",
-    backgroundColor: "#ddd",
-    position: "relative",
-    overflow: "hidden",
-    margin: "20px auto",
-    border: "2px solid #777",
-  },
-  water: {
-    position: "absolute",
-    bottom: "0",
-    width: "100%",
-    backgroundColor: "#00A6FF",
-    transition: "height 0.5s ease-in-out",
-  },
-  button: {
-    backgroundColor: "#00A6FF",
-    color: "#fff",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "5px",
-    fontSize: "16px",
-    cursor: "pointer",
-    marginTop: "10px",
-  },
-  resetButton: {
-    backgroundColor: "#FF4D4D",
-    color: "#fff",
-    padding: "10px 20px",
-    border: "none",
-    borderRadius: "5px",
-    fontSize: "16px",
-    cursor: "pointer",
-    marginTop: "10px",
-    marginLeft: "10px",
-  },
-};
-
+ 
 export default WaterTracker;
