@@ -91,8 +91,16 @@ const MeditationComponent: React.FC<MeditationProps> = ({
 
   return (
     <AppLayout>
-    <div className="flex flex-col items-center p-6 bg-gray-100 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-indigo-700">Meditation Timer</h2>
+      <div className="text-center mb-6">
+        <h2 className="text-lg sm:text-xl font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
+          Meditation
+        </h2>
+        <p className="mt-1 text-xl sm:text-3xl text-black font-bold tracking-tight">
+          Calm your Mind!
+        </p>
+      </div>
+    <div className="flex flex-col items-center p-6 bg-gradient-to-r from-[#200f7b] to-[#961aae]  rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-6 text-white">Timer</h2>
       {showEyesClosedAlert && (
         <div className="bg-indigo-600 text-white p-4 rounded-md mb-4 animate-pulse text-center">
           Take a deep breath and gently close your eyes
@@ -102,7 +110,7 @@ const MeditationComponent: React.FC<MeditationProps> = ({
         <span className="text-5xl font-mono">{formatTime(timeRemaining)}</span>
       </div>
       <div className="mb-6 w-full">
-        <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="duration" className="block text-sm font-medium text-white mb-1">
           Duration (minutes):
         </label>
         <input
@@ -121,7 +129,7 @@ const MeditationComponent: React.FC<MeditationProps> = ({
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
           disabled={isActive}
         />
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className="flex justify-between text-xs text-white">
           <span>1</span>
           <span>15</span>
           <span>30</span>
@@ -152,7 +160,7 @@ const MeditationComponent: React.FC<MeditationProps> = ({
           Reset
         </button>
       </div>
-      <div className="mt-6 text-sm text-gray-600">
+      <div className="mt-6 text-sm text-white">
         <p>Current session: {duration} minutes</p>
       </div>
     </div>

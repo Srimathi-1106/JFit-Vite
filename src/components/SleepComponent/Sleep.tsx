@@ -282,7 +282,7 @@ const Sleep = () => {
                 type="date"
                 value={selectedDate}
                 onChange={changeDate}
-                className="p-1 rounded border border-gray-300 text-black"
+                className="p-1 rounded border border-gray-300 text-black hidden"
             />
 
             {/* Sleep Progress Bar */}

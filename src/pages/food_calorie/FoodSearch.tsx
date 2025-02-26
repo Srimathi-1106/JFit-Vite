@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../config/supabaseClient";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface FoodItem {
   product_name: string;
@@ -111,35 +113,42 @@ const FoodSearch: React.FC = () => {
 
   const handleSelectFood = async (food: FoodItem) => {
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         setError("Please log in to save food entries");
         return;
       }
-
+  
       const entry = {
-        user_id: user.id,
+user_id: user.id,
         date: new Date().toISOString().split("T")[0],
         product_name: food.product_name,
-        calories: food.nutriments?.["energy-kcal"] || 0,
-        proteins: food.nutriments?.proteins || 0,
-        carbohydrates: food.nutriments?.carbohydrates || 0,
-        fats: food.nutriments?.fat || 0,
+        calories: Number((food.nutriments?.["energy-kcal"] ?? 0).toFixed(2)),
+        proteins: Number((food.nutriments?.proteins ?? 0).toFixed(2)),
+        carbohydrates: Number((food.nutriments?.carbohydrates ?? 0).toFixed(2)),
+        fats: Number((food.nutriments?.fat ?? 0).toFixed(2)),
         image_url: food.image_url,
         meal_type: mealType,
         serving_size: 1,
       };
-
-      const { error: saveError } = await supabase
-        .from("food_entries")
-        .insert(entry);
-
+  
+      const { error: saveError } = await supabase.from("food_entries").insert(entry);
       if (saveError) throw saveError;
-
+  
       await loadSavedEntries();
       setSelectedFoods((prev) => [...prev, food]);
+  
+      // Show toast message
+      toast.success(`You selected: ${food.product_name}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+  
     } catch (err) {
       console.error("Error saving food entry:", err);
       setError("Failed to save food entry");
@@ -185,6 +194,7 @@ const FoodSearch: React.FC = () => {
   return (
     <>
       <AppLayout>
+        <ToastContainer progressClassName="custom-progress"/>
         <div className="flex flex-col items-center justify-start animate-fade-in w-full px-4">
           <div className="text-center mb-6">
             <h2 className="text-lg sm:text-xl font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">

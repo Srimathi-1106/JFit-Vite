@@ -22,3 +22,12 @@ html, body, #root {
 body{
   background-color: white;
 }
+
+.Toastify__progress-bar {
+  background: linear-gradient(to bottom right, #351289, #6E17A0) !important; /* Progress bar background */
+}
+
+.Toastify__progress-bar--bg {
+  background: gray !important; /* Progress fill */
+}
+

@@ -158,7 +158,6 @@
 
 // export default WaterTracker;
 
-
 // import React, { useEffect, useState } from "react";
 // import BigCup from "./BigCup";
 // import SmallCups from "./SmallCups";
@@ -257,7 +256,7 @@
 
 //         {/* Convert Liters to Cups (L / 0.25) */}
 //         <Message goal={defaultGoal / CUP_SIZE_LITERS} currentValue={currentValue / CUP_SIZE_LITERS} />
-        
+
 //         <div className="cups-wrapper">
 //           <BigCup goal={defaultGoal / CUP_SIZE_LITERS} currentValue={currentValue / CUP_SIZE_LITERS} />
 //           <SmallCups goal={defaultGoal / CUP_SIZE_LITERS} handleChange={handleChange} />
@@ -268,7 +267,6 @@
 // };
 
 // export default WaterTracker;
-
 
 // import React, { useEffect, useState } from "react";
 // import BigCup from "./BigCup";
@@ -413,35 +411,34 @@
 //         console.error("Error fetching user:", userError);
 //         return;
 //       }
-  
+
 //       const uid = authUser.user.id;
 //       setUserId(uid);
-  
+
 //       const { data, error } = await supabase
 //         .from("water_tracker")
 //         .select("*")
 //         .eq("user_id", uid)
 //         .single();
-  
+
 //       if (error) {
 //         if (error.code === "PGRST116") {
 //           // No record exists, insert a new one
 //           const { error: insertError } = await supabase
 //             .from("water_tracker")
 //             .insert([{ user_id: uid, water_intake: 0, water_target: 2 }]);
-  
+
 //           if (insertError) console.error("Error inserting water data:", insertError);
 //         }
 //       } else {
 //         // ✅ Convert stored Liters correctly for UI
-//         setCurrentValue(data.water_intake); 
+//         setCurrentValue(data.water_intake);
 //         setDefaultGoal(data.water_target);
 //       }
 //     };
-  
+
 //     fetchUserAndWaterData();
 //   }, []);
-  
 
 //   const onSubmitUserGoal = async (e) => {
 //     e.preventDefault();
@@ -497,7 +494,7 @@
 //         </form>
 
 //         <Message goal={defaultGoal / CUP_SIZE_LITERS} currentValue={currentValue / CUP_SIZE_LITERS} />
-        
+
 //         <div className="cups-wrapper">
 //           <BigCup goal={defaultGoal / CUP_SIZE_LITERS} currentValue={currentValue / CUP_SIZE_LITERS} />
 //           <SmallCups goal={defaultGoal / CUP_SIZE_LITERS} handleChange={handleChange} />
@@ -530,16 +527,16 @@
 //         console.error("Error fetching user:", userError);
 //         return;
 //       }
-  
+
 //       const uid = authUser.user.id;
 //       setUserId(uid);
-  
+
 //       const { data, error } = await supabase
 //         .from("water_tracker")
 //         .select("*")
 //         .eq("user_id", uid)
 //         .single();
-  
+
 //       if (error) {
 //         if (error.code === "PGRST116") {
 //           // No record exists, insert a new one
@@ -548,7 +545,7 @@
 //             .insert([{ user_id: uid, water_intake: 0, water_target: 2 }])
 //             .select()
 //             .single();
-  
+
 //           if (insertError) console.error("Error inserting water data:", insertError);
 //           else {
 //             setCurrentValue(newData.water_intake);
@@ -560,10 +557,9 @@
 //         setDefaultGoal(data.water_target);
 //       }
 //     };
-  
+
 //     fetchUserAndWaterData();
 //   }, []);
-  
 
 //   const onSubmitUserGoal = async (e) => {
 //     e.preventDefault();
@@ -623,7 +619,7 @@
 //         </form>
 
 //         <Message goal={defaultGoal / CUP_SIZE_LITERS} currentValue={currentValue / CUP_SIZE_LITERS} />
-        
+
 //         <div className="cups-wrapper">
 //           <BigCup goal={defaultGoal / CUP_SIZE_LITERS} currentValue={currentValue / CUP_SIZE_LITERS} />
 //           <button className="btn mt-4" onClick={handleChange}>+250ml</button>
@@ -638,26 +634,26 @@
 // import React, { useState } from "react";
 // import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 // import "react-circular-progressbar/dist/styles.css";
- 
+
 // const WaterTracker = () => {
 //   const [goal, setGoal] = useState(2000); // Daily goal in ml
 //   const [intake, setIntake] = useState(0);
 //   const [amount, setAmount] = useState(250); // Default drink amount
- 
+
 //   const percentage = Math.min((intake / goal) * 100, 100);
- 
+
 //   const handleAddWater = () => {
 //     setIntake((prev) => Math.min(prev + amount, goal));
 //   };
- 
+
 //   const handleReset = () => {
 //     setIntake(0);
 //   };
- 
+
 //   return (
 //     <div style={styles.container}>
 //       <h2>🚰 Water Tracker</h2>
-      
+
 //       {/* Goal Input */}
 //       <div>
 //         <label>Set Goal (ml): </label>
@@ -668,7 +664,7 @@
 //           style={styles.input}
 //         />
 //       </div>
- 
+
 //       {/* Water Glass Animation */}
 //       <div style={styles.glassContainer}>
 //         <div
@@ -678,7 +674,7 @@
 //           }}
 //         />
 //       </div>
- 
+
 //       {/* Circular Progress Bar */}
 //       <div style={{ width: "150px", margin: "20px auto" }}>
 //         <CircularProgressbar
@@ -692,11 +688,11 @@
 //           })}
 //         />
 //       </div>
- 
+
 //       <p>
 //         <strong>{intake} ml</strong> / {goal} ml
 //       </p>
- 
+
 //       {/* Buttons */}
 //       <button style={styles.button} onClick={handleAddWater}>
 //         💧 Drink {amount}ml
@@ -707,7 +703,7 @@
 //     </div>
 //   );
 // };
- 
+
 // const styles = {
 //   container: {
 //     width: "300px",
@@ -765,7 +761,7 @@
 //     marginLeft: "10px",
 //   },
 // };
- 
+
 // export default WaterTracker;
 
 // import React, { useState, useEffect } from "react";
@@ -946,22 +942,22 @@
 // };
 
 // export default WaterTracker;
-import React, { useEffect, useState } from 'react';
-import BigCup from './BigCup';
-import SmallCups from './SmallCups';
-import Message from './Message';
-import '../../css_files/WaterTracker.css';
- 
+import React, { useEffect, useState } from "react";
+import BigCup from "./BigCup";
+import SmallCups from "./SmallCups";
+import Message from "./Message";
+import "../../css_files/WaterTracker.css";
+
 const WaterTracker = () => {
   const [userGoal, setUserGoal] = useState(8);
   const [defaultGoal, setDefaultGoal] = useState(8);
   const [currentValue, setCurrentValue] = useState(0);
   const [usage, setUsage] = useState(0);
   const [goal, setGoal] = useState(0);
- 
+
   useEffect(() => {
-    const savedGoal = localStorage.getItem('userGoal');
-    const savedProgress = localStorage.getItem('currentValue');
+    const savedGoal = localStorage.getItem("userGoal");
+    const savedProgress = localStorage.getItem("currentValue");
     if (savedGoal) {
       setDefaultGoal(parseInt(savedGoal));
       setUserGoal(parseInt(savedGoal));
@@ -969,41 +965,49 @@ const WaterTracker = () => {
     if (savedProgress) {
       setCurrentValue(parseInt(savedProgress));
     }
- 
+
     // Load saved cup states
-    const savedCups = localStorage.getItem('selectedCups');
+    const savedCups = localStorage.getItem("selectedCups");
     if (savedCups) {
       const cups = JSON.parse(savedCups);
       const selectedCount = cups.reduce((total, count) => total + count, 0);
       setCurrentValue(selectedCount);
     }
   }, []);
- 
+
   useEffect(() => {
-    localStorage.setItem('userGoal', defaultGoal);
-    localStorage.setItem('currentValue', currentValue);
+    localStorage.setItem("userGoal", defaultGoal);
+    localStorage.setItem("currentValue", currentValue);
   }, [defaultGoal, currentValue]);
- 
+
   const onSubmitUserGoal = (e) => {
     e.preventDefault();
     setDefaultGoal(userGoal);
   };
- 
+
   const onChangeUserGoal = (event) => {
     setGoal(parseInt(event.target.value) || 0);
     setUserGoal(parseInt(event.target.value) || 0);
   };
- 
+
   const handleChange = (value) => {
     setCurrentValue(parseInt(currentValue + value) || 0);
   };
- 
+
   return (
-    <div className='body'>
-      <div className='main-wrapper body'>
-        <h3 className='title'>How many cups do you want to drink?</h3>
-        <form className='form' onSubmit={onSubmitUserGoal}>
-          <label className='goal-label'>
+    <div className="body py-5 my-10">
+      <div className="text-center mb-6">
+        <h2 className="text-lg sm:text-xl font-semibold leading-7 text-white">
+          Water Tracker
+        </h2>
+        <p className="mt-1 text-xl sm:text-3xl text-black font-bold tracking-tight">
+          Track your water level and drink more!
+        </p>
+      </div>
+      <div className="main-wrapper body">
+        <h3 className="title">How many cups do you want to drink?</h3>
+        <form className="form" onSubmit={onSubmitUserGoal}>
+          <label className="goal-label">
             Your goal:
             <input
               type="number"
@@ -1011,13 +1015,15 @@ const WaterTracker = () => {
               max="15"
               value={userGoal}
               onChange={onChangeUserGoal}
-              className='input1 text-black w-[40px]'
+              className="input1 text-black w-[40px]"
             />
           </label>
-          <button className="btn" type="submit">Submit</button>
+          <button className="btn" type="submit">
+            Submit
+          </button>
         </form>
         <Message goal={defaultGoal} currentValue={currentValue} />
-        <div className='cups-wrapper'>
+        <div className="cups-wrapper">
           <BigCup goal={defaultGoal} currentValue={currentValue} />
           <SmallCups goal={defaultGoal} handleChange={handleChange} />
         </div>
@@ -1025,5 +1031,5 @@ const WaterTracker = () => {
     </div>
   );
 };
- 
+
 export default WaterTracker;
