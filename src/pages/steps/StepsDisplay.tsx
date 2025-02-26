@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "../../config/supabaseClient";
 import { AppLayout } from "@/components/layout/AppLayout";
-import WaterTracker from "@/components/WaterTrackerComponent/WaterTracker";
+
 const StepsDisplay = () => {
   const [stepCount, setStepCount] = useState(0);
   const [goal, setGoal] = useState(10000);

@@ -60,7 +60,7 @@ const Auth = () => {
 
   return (
     // <div className="h-screen flex flex-col items-center justify-center bg-gray-900 text-white relative overflow-hidden " style={{width:"100vw", height:"100vh"}}>
-    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white relative overflow-hidden " style={{width:"100vw", height:"100vh"}}>
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#351289] to-[#6E17A0] text-white relative overflow-hidden" style={{width:"100vw", height:"100vh"}}>
 
     {/* Floating Animated Dumbbells */}
       <motion.div
@@ -104,7 +104,7 @@ const Auth = () => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md text-center"
+        className="bg-gray-800 px-10 rounded-lg shadow-lg w-full flex flex-col gap-2 max-w-md text-center py-12"
       >
         {error && <p className="text-red-500">{error}</p>}
 
@@ -172,10 +172,10 @@ const Auth = () => {
           Login
         </motion.button>
 
-        <div className="text-center my-4 text-gray-400">or</div>
+        {/* <div className="text-center my-4 text-gray-400">or</div> */}
 
         {/* Google Authentication with Icon */}
-        <motion.button
+        {/* <motion.button
           onClick={handleGoogleSignIn}
           className="w-full bg-red-500 text-white py-2 flex items-center justify-center gap-2 rounded-md hover:bg-red-600 transition"
           whileHover={{ scale: 1.05 }}
@@ -183,7 +183,7 @@ const Auth = () => {
         >
           <FaGoogle />
           Sign in with Google
-        </motion.button>
+        </motion.button> */}
       </motion.div>
     </div>
   );
