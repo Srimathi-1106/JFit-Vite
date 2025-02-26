@@ -181,7 +181,6 @@ const StepsDisplay = () => {
 
   return (
     <AppLayout>
-      <WaterTracker />
       <div className="text-center mb-6">
         <h2 className="text-lg sm:text-xl font-semibold leading-7 bg-gradient-to-r from-[#200f7b] to-[#961aae] text-transparent bg-clip-text">
           Steps Tracker
