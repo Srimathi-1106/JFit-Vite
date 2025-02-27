@@ -40,7 +40,7 @@ const Message: React.FC<MessageProps> = ({ currentValue, goal }) => {
 
   return (
     <div className="message-wrapper">
-      <div className="message">{message}</div>
+      {/* <div className="message">{message}</div> */}
       <div className="remained" ref={remainedRef}>
         <span ref={literRef}></span>
         <small>Remained</small>

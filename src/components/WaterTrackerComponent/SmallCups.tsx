@@ -1,39 +1,15 @@
-// import React from 'react';
-// import Cup from './Cup'
-// import '../../css_files/SmallCups.css'
+import React from "react";
+import Cup from "./Cup";
+import "../../css_files/SmallCups.css";
 
-// function SmallCups({ goal, handleChange }) {
-//   const cups = [];
-
-//   for (let i = 0; i < goal; i++) {
-//     cups.push(<Cup key={i} change={handleChange} />)
-//   }
-
-//   return (
-//     <div className="cups">
-//       {cups}
-//     </div>
-//   );
-// }
-
-
-// export default SmallCups;
-import React from 'react';
-import Cup from './Cup';
-import '../../css_files/SmallCups.css';
- 
-function SmallCups({ goal, handleChange }) {
-  const cups = [];
- 
-  for (let i = 0; i < goal; i++) {
-    cups.push(<Cup key={i} index={i} change={handleChange} />);
-  }
- 
+function SmallCups({ goal, handleChange, selectedCups }) {
   return (
     <div className="cups">
-      {cups}
+      {Array.from({ length: goal }).map((_, i) => (
+        <Cup key={i} index={i} change={handleChange} selected={selectedCups[i] || 0} />
+      ))}
     </div>
   );
 }
- 
+
 export default SmallCups;
